@@ -1,0 +1,10 @@
+Preliminary test 000 (22/07/2021)
+
+Test sequences shot with with a 3 camera rig at FullHD(1080p) 30fps. Horizontal FOV is 120 degrees.
+- Path: Department of informatics (DI), Dirt Road on the back of the Department.
+- Hour: 3:36 pm
+- Path conditions:  100% of path easy, straight or slightly curvy.
+
+The cameras are mounted on a pole (ours was 1.10m in length) with one camera clamped securely on the left side, one clamped in the middle, and one on the right side. Distance between consecutive cameras was 0.55m.
+
+
