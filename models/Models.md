@@ -13,7 +13,7 @@ For our dataset (Zografou University Campus) follow the steps in [this](./datase
 Once the dataset is created, the model can be trained and fine-tuned using DIGITS. Follow the steps in [this](./Training-TrailNet-model.md) document.
 
 ## Deploying a model
-Once the model is trained, resulting `.prototxt` and `.caffemodel` files can be used by ROS nodes running on Jetson. The models can be used either in a [simulator environment](./Testing-in-Simulator) or on a [real drone](./Launch-Sequence-and-Flying).
+Once the model is trained, resulting `.prototxt` and `.caffemodel` files can be used by ROS nodes running on Jetson.
 
 # Pre-trained models
 You can also use pre-trained models as described in [here](./pretrained/Pretrained-models.md). AriadneNet is our trained model based on the TrailNet architecture.

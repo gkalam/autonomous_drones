@@ -1,0 +1,4 @@
+$ chmod +x ./run_l4tml_docker.sh
+$ chmod +x ./run_rosnoetic_docker.sh
+$ chmod +x ./run_digits_docker.sh
+

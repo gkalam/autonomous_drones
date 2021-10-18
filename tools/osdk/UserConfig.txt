@@ -1,0 +1,6 @@
+app_id : 1068959
+app_key : 1bfa7f3344bb20a7710cac803894cbc07b443f82ad72462e8c28cff6a7f95ba3
+device : /dev/ttyUSB0
+Drone/FC Version: M100
+SDK Version: 3.9
+baudrate : 230400

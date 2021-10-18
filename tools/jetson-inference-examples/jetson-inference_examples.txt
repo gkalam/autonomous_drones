@@ -1,0 +1,38 @@
+jetson-inference: Guide to deploying deep-learning inference networks and deep vision primitives with TensorRT and NVIDIA Jetson.
+https://github.com/dusty-nv/jetson-inference
+
+### Samples & Examples ###
+
+Create Videos Symlink Folder
+ln -s /home/pcomp/nvidia_tutorials/jetson-inference/data/videos /home/pcomp/nvidia_tutorials/jetson-inference/build/aarch64/bin/videos
+cd "./nvidia_tutorials/jetson-inference/build/aarch64/bin"
+
+[Image Files]
+DeepScene 	576x320 	fcn-resnet18-deepscene-576x320
+DeepScene 	864x480 	fcn-resnet18-deepscene-864x480
+$ ./segnet --network=fcn-resnet18-deepscene-576x320 --filter-mode=linear --visualize=overlay,mask --ignore-class=void --alpha=175.0 "images/trail_*.jpg" output/trail_%i_output_overlay_mask_576x320.jpg
+$ ./segnet --network=fcn-resnet18-deepscene-864x480 --filter-mode=linear --visualize=overlay,mask --ignore-class=void --alpha=175.0 "images/trail_*.jpg" output/trail_%i_output_overlay_mask_864x480.jpg
+
+[Video Files]
+Convert Video av1 --> h264[.mp4] (FullHD, 30fps)
+$ /usr/local/bin/ffmpeg -y -i "/home/gkalam/Downloads/dwhelper/Highbanks Virtual Trail Run - YouTube.mkv" -crf 18.0 -vcodec libx264 -filter:v scale=w=1920:h=1080 -preset veryslow -acodec aac -strict experimental -ar 48000 -b:a 192k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1 -threads 0 "/home/gkalam/Downloads/dwhelper/Highbanks Virtual Trail Run - YouTube.mp4"
+
+/usr/local/bin/ffmpeg -ss 00:00:15 -y -i "/home/gkalam/Downloads/dwhelper/Highbanks Virtual Trail Run - YouTube.mkv" -t 00:05:00 -crf 23.0 -c:v libx264 -preset veryslow -c:a aac -b:a 128k "/home/gkalam/Downloads/dwhelper/TrailRun_Highbanks_5minClip.mp4"
+
+$ ./video-viewer "videos/sample1.mp4"
+$ ./segnet --network=fcn-resnet18-deepscene-864x480 --filter-mode=linear --visualize=overlay --ignore-class=void --alpha=120.0 --output-codec=h264 --bitrate=4000000 --headless "videos/TrailRun_Highbanks_5minClip.mp4" "videos/TrailRun_Highbanks_deepscene-864x480.mp4"
+
+./segnet --network=fcn-resnet18-deepscene-864x480 --filter-mode=linear --visualize=overlay --ignore-class=void --alpha=120.0 rtsp://192.168.1.5:8554/stream
+
+./detectnet --network=ssd-mobilenet-v2 --overlay=box,labels,conf --alpha=120.0 --output-codec=h264 --bitrate=4000000 --headless "videos/TrailRun_Highbanks_5minClip.mp4" "videos/TrailRun_Highbanks_ssd-mobilenet-v2.mp4"
+
+[MIPI CSI cameras]
+$ video-viewer --input-flip=rotate-180 csi://0
+
+[V4L2 cameras]
+$ video-viewer v4l2:///dev/video0
+$ video-viewer /dev/video0
+
+
+
+

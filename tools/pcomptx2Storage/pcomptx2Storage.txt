@@ -1,0 +1,53 @@
+MicroSD card (64 GB UHS-1 recommended, 32 GB UHS-1 minimum)
+Used(Deprecated on 07.2021): Kingston 32 GB Class 4 SDHC Flash Memory Card - (Original) Speed Class
+Recommended: KINGSTON SDS2/256GB 256GB SDXC CANVAS SELECT PLUS 100R C10 UHS-I U3 V30 - 38 Euro
+https://www.e-shop.gr/kingston-sds2-256gb-256gb-sdxc-canvas-select-plus-100r-c10-uhs-i-u3-v30-p-PER.346199
+Used: 64 GB UHS-II
+
+mount sd card into jetson
+https://forums.developer.nvidia.com/t/mount-sd-card-into-jetson/50056
+
+The SD card as a whole would be “/dev/mmcblk2”, while the eMMC would be “/dev/mmcblk0”.
+
+See the existing partitions and types of the SD card
+$ gdisk -l /dev/mmcblk2
+The first partition of the SD is mmcblk1p1, and this is what you would be formatting and mounting (usually an SD card comes formatted with type VFAT, you may want to use ext4 instead…
+$ sudo mkfs.ext4 /dev/mmcblk2p1
+$ sudo mount /dev/mmcblk1p1 <some_mount_point_like_/mnt>
+permanent mount this would be from the file “/etc/fstab”
+check the output of “sudo blkid” to get the UUID for putting in fstab.
+
+How to Attach & Mount 1TB Disk on Azure Linux VM running Ubuntu
+https://www.youtube.com/watch?v=PmswUaf96ZA&feature=youtu.be
+$ df -h
+$ lsblk -o NAME,HCTL,SIZE,MOUNTPOINT
+$ sudo parted /dev/mmcblk1 --script mklabel gpt mkpart xfspart xfs 0% 100%
+$ sudo mkfs.ext4 /dev/mmcblk2p1
+$ sudo mkdir /mnt/sd64gb
+$ sudo mount /dev/mmcblk2p1 /mnt/sd64gb
+$ umount /mnt/sd64gb
+$ rm -r /mnt/sd64gb
+
+Softlinks (symbolic-link)
+$ ln -s /mnt/sd64gb/nvidia_tutorials /home/pcomp/nvidia_tutorials
+$ rm /home/pcomp/nvidia_tutorials
+
+How to change docker root data directory
+https://medium.com/@tienbm90/how-to-change-docker-root-data-directory-89a39be1a70b
+$ sudo cp -rp /var/lib/docker/ "/mnt/sd64gb/docker/"
+$ sudo mv /var/lib/docker /var/lib/docker.old
+
+$ sudo ln -s /mnt/sd64gb/docker /var/lib/docker
+$ sudo rm /var/lib/docker
+$ sudo service docker start
+$ service --status-all | grep docker
+
+Alternative for changing docker data root:
+You can move your docker data dir by having your M.2 drive auto-mounted on boot (via fstab) and adding a line like this to your /etc/docker/daemon.json configuration:
+"data-root": "/your/desired/path",
+"data-root": "/mnt/sd64gb/docker",
+You would then want to reboot or restart the docker service for the changes to take effect. You can check that the docker data dir is indeed what you want by running sudo docker info.
+
+Display the total aggregate size (disk usage) of all files in a directory (folder) https://askubuntu.com/questions/1224/how-do-i-determine-the-total-size-of-a-directory-folder-from-the-command-line
+du -hs /path/to/directory
+

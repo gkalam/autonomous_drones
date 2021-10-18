@@ -1,0 +1,9 @@
+/var/lib/aarch64-linux-gnu
+/var/log/
+
+tail -100 /var/log/auth.log
+
+sudo rm /var/log/auth.log.1
+sudo rm /var/log/syslog.1
+sudo rm /var/log/btmp.1
+

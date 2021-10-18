@@ -1,0 +1,6 @@
+[IntelliJ] Connect to Docker on Remote Host?
+https://intellij-support.jetbrains.com/hc/en-us/community/posts/360009277620-Connect-to-Docker-on-Remote-Host-
+
+[IntelliJ] Native support for running Docker on the remote machine
+https://youtrack.jetbrains.com/issue/PY-33489
+

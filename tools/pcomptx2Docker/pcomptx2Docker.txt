@@ -1,0 +1,32 @@
+$ sudo service docker start
+$ service --status-all | grep docker
+$ docker version
+$ docker info
+$ sudo service docker restart
+
+#Virtual and actual disk allocation size
+$ df -h /mnt/sd*
+$ du -shc /var/lib/docker/overlay2/*/diff
+$ du -sh /var/lib/docker/overlay2
+
+#Clear dangling images
+$ docker system prune --all --volumes --force
+#freed up disk space from volumes
+$ docker volume rm $(docker volume ls -qf dangling=true)
+
+#removing all docker logs files from my containers
+$ find /var/lib/docker/containers/ -type f -name “*.log” -delete
+$ sudo sh -c "truncate -s 0 /var/lib/docker/containers/*/*-json.log"
+#restart the docker containers
+$ docker-compose down && docker-compose up -d
+#clean up the builder cache
+$ docker builder prune --all
+
+#docker basic commands
+$ docker image ls
+$ docker container ls
+$ docker volume ls 	# mounted paths
+
+# docker remove image
+$ docker image rm <docker_image_id>
+$ docker image rm c74a2c7e3669
